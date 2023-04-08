@@ -1,36 +1,25 @@
 package io.github.navpil.muaddi.servlet;
 
-import io.github.navpil.muaddi.core.MuadContext;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.http.HttpServlet;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class MuadServlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) {
         String beans = config.getInitParameter("beans");
-        String[] allClasses = beans.split("\\s+");
+        String basePath = config.getInitParameter("base-path");
+        String[] classNames = beans.split("\\s+");
 
-        //Initialize Muad Context
-        MuadContext muadContext = new MuadContext();
-        for (String className : allClasses) {
-            Class<?> clazz = getClassForName(className);
-            muadContext.register(clazz);
+        Set<Class<?>> allClasses = new HashSet<>();
+        for (String clazz : classNames) {
+            allClasses.add(getClassForName(clazz));
         }
-        muadContext.initialize();
 
-        //Register servlets
-        for (String className : allClasses) {
-            Class<?> clazz = getClassForName(className);
-            if (clazz.isAnnotationPresent(MuadServletMapping.class)) {
-                String path = clazz.getAnnotation(MuadServletMapping.class).value();
-                config.getServletContext()
-                        .addServlet(className, (HttpServlet)muadContext.get(clazz))
-                        //Good behaving servlets will usually prepend it with own path, such as /muad + /books
-                        //MuadServlet is not a good behaving one
-                        .addMapping(path);
-            }
-        }
+        new MuadInitializer().init(allClasses, basePath, config.getServletContext());
     }
 
     private static Class<?> getClassForName(String s) {

@@ -101,20 +101,43 @@ Examples for both Java SE (`muaddi-core`) and Java EE (`muaddi-servlet`).
  - Tests in `muaddi-core` for Java SE
  - Deploy `muaddiexample.war` to Tomcat and call:
 
-       http://localhost:8080/muaddiexample/books
+       http://localhost:8080/muaddiexample/muad-new/books
 
 Please note the handling of `MuadServletMapping` annotation in `MuadServlet`.
 If we add some `MuadHandler` interface and find it by using SPI we can start doing something what Spring Framework does.
+
+There are two ways of registering Muad-backed application.
+One (older) is by registering MuadServlet manually in the `web.xml`.
+Another (newer) one is simply adding some dummy configuration file and annotating it with `@MuadConfig`.
+In a newer way we won't need any `web.xml` configuration and Muad will be initialized by `MuadSerlvletContainerInitializer`
+picked up by Tomcat by using SPI (see below).
 
 ## Service Discovery
 
 ### SPI
 
 Built-in service discovery in Java.
+Enables coding to interfaces, with no need for concrete "enter point" implementation.
 
-Example with JDBC drivers or Logging Implementations.
+For example used with JDBC drivers or Logging Implementations.
 
-TODO: SPI example
+Every JDBC driver has this file:
+
+    META-INF/services/java.sql.Driver
+
+with the name of the driver itself, e.g.
+
+    com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+Then it's found by the Java code, like this:
+
+    for (Driver driver = java.util.ServiceLoader.load(Driver.class))
+        if (driver.acceptsURL(dbUrl)) return driver;
+
+Slf4j uses SPI to find logging implementations, file `META-INF/services/org.slf4j.spi.SLF4JServiceProvider`
+contains e.g. `org.slf4j.jul.JULServiceProvider`
+
+Check SPI example in `varrius` project, in `SPIApplicationInitialize`
 
 ## Discovery in DI frameworks
 
@@ -124,6 +147,7 @@ Discovering the components can be done in different ways:
 
 - Spring xml way - no autodiscovery, beans are injected as configured in an `.xml` file
 - HK2 way - implementations are matched with interfaces manually, injected automatically
+- HK2 autoconfigured - precreated indexes for each jar file
 - Spring annotation way, Weld CDI way - everything is found automatically
 
 ## JCR 299 vs JCR 330
@@ -141,5 +165,8 @@ Most of the DI frameworks implement or follow the `JCR 330`.
 
 [Java SE examples](https://github.com/Col-E/Useful-Things/tree/master/tutorials/dependency-injection)
 
-TODO: Spring, Guice and HK2 examples (maybe copy the `bigbang` project)
+TODO: Spring, Guice and HK2+Jersey examples (maybe use the `varrius` project)
+
+Jakarta - no need for configuration, servers support it by default.
+TODO: Example with Quarkus 
 

@@ -18,6 +18,10 @@
                 muadservlet.example.BookService
             </param-value>
         </init-param>
+        <init-param>
+            <param-name>base-path</param-name>
+            <param-value>/muad-old</param-value>
+        </init-param>
         <!-- Important -->
         <load-on-startup>1</load-on-startup>
     </servlet>
