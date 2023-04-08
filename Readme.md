@@ -161,6 +161,20 @@ Most of the DI frameworks implement or follow the `JCR 330`.
 
 `JCR 299` and its reference implementation _Weld CDI_ is about Java EE containers and such servers as WildFly or WebSphere.
 
+<details>
+<summary>JSR299 vs JSR330 rivalry</summary>
+
+There was an argument between JSR299 and JSR330 folks.
+Here are some articles about it:
+
+- [Guice angry at 299](https://groups.google.com/g/google-guice/c/UPt6ILpH_-o/m/LPad-WnzlfcJ)
+- [299 angry at 330](https://in.relation.to/2009/05/07/comments-on-annotations-for-dependency-injection/)
+- [299 is better than 330](https://in.relation.to/2009/06/11/jsr-299-proposed-final-draft-submitted/)
+- [330 released, "too bad for 299"](http://blog.crazybob.org/2009/05/announcing-javaxinjectinject.html)
+- [Asking for peaceful resolution](http://macstrac.blogspot.com/2009/03/jsr-299-contexts-and-dependency.html)
+- [Peaceful resolution](https://blogs.infosupport.com/injecting-jsr330-into-jsr299/)
+</details>
+
 ## DI Framework examples
 
 [Java SE examples](https://github.com/Col-E/Useful-Things/tree/master/tutorials/dependency-injection)
