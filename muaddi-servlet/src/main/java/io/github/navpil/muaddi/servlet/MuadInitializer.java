@@ -6,6 +6,9 @@ import jakarta.servlet.http.HttpServlet;
 
 import java.util.Collection;
 
+/**
+ * Common initializer used by both MuadServlet and MuadServletContainerInitializer
+ */
 public class MuadInitializer {
 
     public void init(Collection<Class<?>> allClasses, String basePath, ServletContext servletContext) {

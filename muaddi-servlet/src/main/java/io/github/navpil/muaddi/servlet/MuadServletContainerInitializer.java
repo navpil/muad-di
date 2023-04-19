@@ -9,6 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Uses newer version of initializing Muad'DI, searches for @MuadConfig annotated class
+ */
 @HandlesTypes({MuadConfig.class})
 public class MuadServletContainerInitializer implements ServletContainerInitializer {
     @Override

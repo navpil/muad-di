@@ -8,7 +8,8 @@ Problems:
 Solutions:
 
 - Dependency Injection (manual or automated by IoC Container) - inject dependencies
-- Service Discovery (e.g. SPI) - find implementations for interfaces (or abstract classes)
+- Service Resolution (e.g. SPI) - find implementations for interfaces (or abstract classes)
+  (I'd use the "service discovery" term, but it's reserved to a microservice domain)
 
 > What is Dependency Inversion?
 > 
@@ -17,11 +18,11 @@ Solutions:
 > What can be this magic?
 
 We need to find a component and inject it.
-Finding a correct component is "discovery".
-Injecting a component is "injection".
+Finding a correct component is "Resolution".
+Injecting a component is "Injection".
 
-IoC containers can do both, even though these are different things (SPI is discovery without an injection, 
-Spring xml configuration is injection without discovery).
+IoC containers can do both, even though these are different things (SPI is Resolution without an injection, 
+Spring xml configuration is injection without Resolution).
 
 > IoC stands for Inversion of Control - don't call us, we will call you.
 > That's a generic principle used in frameworks - code is written so that framework calls it.
@@ -31,10 +32,10 @@ Spring xml configuration is injection without discovery).
 > Thus IoC container has a narrower meaning than IoC. 
 > However Spring IoC has many more responsibilities than simple Dependency Injection.
 
-Dependency Injection and Service discovery often come hand in hand, but they are not necessarily related.
+Dependency Injection and Service Resolution often come hand in hand, but they are not necessarily related.
 
-Examples of Dependency Injection without Service Discovery (Muad'DI) 
-and Service Discovery without Dependency Injection (SPI) follow.
+Examples of Dependency Injection without Service Resolution (Muad'DI) 
+and Service Resolution without Dependency Injection (SPI) follow.
 
 ## Dependency Injection
 
@@ -112,11 +113,11 @@ Another (newer) one is simply adding some dummy configuration file and annotatin
 In a newer way we won't need any `web.xml` configuration and Muad will be initialized by `MuadSerlvletContainerInitializer`
 picked up by Tomcat by using SPI (see below).
 
-## Service Discovery
+## Service Resolution
 
 ### SPI
 
-Built-in service discovery in Java.
+Built-in service Resolution in Java.
 Enables coding to interfaces, with no need for concrete "enter point" implementation.
 
 For example used with JDBC drivers or Logging Implementations.
@@ -139,13 +140,13 @@ contains e.g. `org.slf4j.jul.JULServiceProvider`
 
 Check SPI example in `varrius` project, in `SPIApplicationInitialize`
 
-## Discovery in DI frameworks
+## Resolution in DI frameworks
 
-Service discovery may be built into the DI Frameworks.
+Service Resolution may be built into the DI Frameworks.
 
-Discovering the components can be done in different ways:
+Resolution of the components can be done in different ways:
 
-- Spring xml way - no autodiscovery, beans are injected as configured in an `.xml` file
+- Spring xml way - no auto-resolution, beans are injected as configured in an `.xml` file
 - HK2 way - implementations are matched with interfaces manually, injected automatically
 - HK2 autoconfigured - precreated indexes for each jar file
 - Spring annotation way, Weld CDI way - everything is found automatically

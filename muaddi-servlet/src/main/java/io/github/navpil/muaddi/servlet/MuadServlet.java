@@ -6,6 +6,9 @@ import jakarta.servlet.http.HttpServlet;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Older way to initialize Muad'DI - this servlet should be registered in web.xml for Muad'DI to work.
+ */
 public class MuadServlet extends HttpServlet {
 
     @Override
