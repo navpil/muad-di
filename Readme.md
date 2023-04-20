@@ -162,6 +162,9 @@ Most of the DI frameworks implement or follow the `JCR 330`.
 
 `JCR 299` and its reference implementation _Weld CDI_ is about Java EE containers and such servers as WildFly or WebSphere.
 
+`JCR 330` is a subset of `JCR299`.
+And then there are custom annotations, like Spring's `@Autowired` (or `@MuadInject` as in Muad'DI).
+
 <details>
 <summary>JSR299 vs JSR330 rivalry</summary>
 
@@ -175,6 +178,7 @@ Here are some articles about it:
 - [Asking for peaceful resolution](http://macstrac.blogspot.com/2009/03/jsr-299-contexts-and-dependency.html)
 - [Peaceful resolution](https://blogs.infosupport.com/injecting-jsr330-into-jsr299/)
 </details>
+
 
 ## DI Framework examples
 
