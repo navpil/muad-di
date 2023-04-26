@@ -57,10 +57,13 @@ If constructor accepts `UserRepository` then it already becomes a dependency inv
 
 Dependency injection can be done manually:
 
-    UserResource userResource = new UserResource(new UserService());
-    List<String> users = userResource.list();
+    UserService userService = new UserService(new UserRepositoryImpl());
+    List<String> users = userService.list();
 
 But we use _DI frameworks_ (or _IoC containers_) to make injections for us. 
+
+> Side note: Dependency Injection eliminates the need for the keyword `new` in the code only for service classes.
+> The value classes, such as DTO objects or Entities should still be created manually.
 
 ### DI frameworks
 
@@ -151,19 +154,24 @@ Resolution of the components can be done in different ways:
 - HK2 autoconfigured - precreated indexes for each jar file
 - Spring annotation way, Weld CDI way - everything is found automatically
 
-## JCR 299 vs JCR 330
+## JSR 299 vs JSR 330
 
- - Simpler [JCR 330 Dependency Injection, DI](https://jakarta.ee/specifications/dependency-injection/1.0/)
- - Complex [JCR 299 Context And Dependency Injection, CDI](https://jakarta.ee/specifications/cdi/3.0/)
+ - Simpler [JSR 330 Dependency Injection, DI](https://jakarta.ee/specifications/dependency-injection/1.0/)
+ - Complex [JSR 299 Context And Dependency Injection, CDI](https://jakarta.ee/specifications/cdi/3.0/)
 
 CDI depends on DI.
 
-Most of the DI frameworks implement or follow the `JCR 330`.
+Most of the DI frameworks implement or follow the `JSR 330`.
 
-`JCR 299` and its reference implementation _Weld CDI_ is about Java EE containers and such servers as WildFly or WebSphere.
+`JSR 299` and its reference implementation _Weld CDI_ is about Java EE containers and such servers as WildFly or WebSphere.
 
-`JCR 330` is a subset of `JCR299`.
+`JSR 330` is a subset of `JSR 299`.
 And then there are custom annotations, like Spring's `@Autowired` (or `@MuadInject` as in Muad'DI).
+
+`JSR 330` does not provide any common interface of the Context, so in some way it's a meaningless standard,
+because every other non-DI framework should be integrated with DI in a proprietary way.
+For example - you can't simply switch HK2 for Guice when using Jersey.
+And in real Java EE context `JSR 299` will do the job. 
 
 <details>
 <summary>JSR299 vs JSR330 rivalry</summary>
