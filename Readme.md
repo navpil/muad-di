@@ -53,7 +53,7 @@ but:
       this.userRepository = userRepository
     }
 
-If constructor accepts `UserRepository` then it already becomes a dependency inversion.
+If constructor accepts interface `UserRepository` then it already becomes a dependency inversion.
 
 Dependency injection can be done manually:
 
@@ -113,7 +113,7 @@ If we add some `MuadHandler` interface and find it by using SPI we can start doi
 There are two ways of registering Muad-backed application.
 One (older) is by registering MuadServlet manually in the `web.xml`.
 Another (newer) one is simply adding some dummy configuration file and annotating it with `@MuadConfig`.
-In a newer way we won't need any `web.xml` configuration and Muad will be initialized by `MuadSerlvletContainerInitializer`
+In a newer way we won't need any `web.xml` configuration and Muad will be initialized by `MuadServletContainerInitializer`
 picked up by Tomcat by using SPI (see below).
 
 ## Service Resolution
@@ -150,9 +150,9 @@ Service Resolution may be built into the DI Frameworks.
 Resolution of the components can be done in different ways:
 
 - Spring xml way - no auto-resolution, beans are injected as configured in an `.xml` file
+- Spring annotation way, Weld CDI way - everything is found automatically
 - HK2 way - implementations are matched with interfaces manually, injected automatically
 - HK2 autoconfigured - precreated indexes for each jar file
-- Spring annotation way, Weld CDI way - everything is found automatically
 
 ## JSR 299 vs JSR 330
 
