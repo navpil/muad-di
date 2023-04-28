@@ -103,7 +103,7 @@ Only to show what is DI under the hood.
 Examples for both Java SE (`muaddi-core`) and Java EE (`muaddi-servlet`).
 
  - Tests in `muaddi-core` for Java SE
- - Deploy `muaddiexample.war` to Tomcat and call:
+ - Deploy `muaddiexample.war` to Tomcat 10 (earlier versions might not work) and call:
 
        http://localhost:8080/muaddiexample/muad-new/books
 
