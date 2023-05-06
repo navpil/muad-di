@@ -9,8 +9,8 @@ import java.util.Set;
 
 public class MuadContext {
 
-    private Set<Class<?>> classes = new HashSet<>();
-    private Map<Class<?>, Object> instances = new HashMap<>();
+    private final Set<Class<?>> classes = new HashSet<>();
+    private final Map<Class<?>, Object> instances = new HashMap<>();
 
     private boolean initialized = false;
 
@@ -20,7 +20,7 @@ public class MuadContext {
     }
 
     public MuadContext initialize() {
-        Map<Class, Constructor> allConstructors = new HashMap<>();
+        Map<Class<?>, Constructor<?>> allConstructors = new HashMap<>();
 
         for (Class<?> clazz : classes) {
             allConstructors.put(clazz, findConstructor(clazz));
@@ -34,11 +34,12 @@ public class MuadContext {
         return this;
     }
 
-    private Constructor findConstructor(Class clazz) {
-        Constructor<?>[] constructors = clazz.getConstructors();
-        Constructor<?> injectedConstructor = null;
-        Constructor<?> defaultConstructor = null;
-        for (Constructor<?> constructor : constructors) {
+    private <T> Constructor<T> findConstructor(Class<T> clazz) {
+        //noinspection unchecked
+        Constructor<T>[] constructors = (Constructor<T>[])clazz.getConstructors();
+        Constructor<T> injectedConstructor = null;
+        Constructor<T> defaultConstructor = null;
+        for (Constructor<T> constructor : constructors) {
             if (constructor.getDeclaredAnnotation(MuadInject.class) != null) {
                 injectedConstructor = constructor;
                 break;
@@ -55,7 +56,7 @@ public class MuadContext {
         }
     }
 
-    private <T> T createInstance(Class clazz, Map<Class, Constructor> allConstructors) {
+    private <T> T createInstance(Class<T> clazz, Map<Class<?>, Constructor<?>> allConstructors) {
         if (!instances.containsKey(clazz)) {
             Constructor<?> constructor = allConstructors.get(clazz);
             if (constructor.getParameterCount() == 0) {
@@ -69,10 +70,11 @@ public class MuadContext {
                 instances.put(clazz, instantiate(constructor, parameters));
             }
         }
+        //noinspection unchecked
         return (T)instances.get(clazz);
     }
 
-    private static Object instantiate(Constructor<?> constructor, Object[] parameters){
+    private static <T> T instantiate(Constructor<T> constructor, Object[] parameters){
         try {
             return constructor.newInstance(parameters);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
@@ -80,7 +82,7 @@ public class MuadContext {
         }
     }
 
-    private static Object instantiate(Constructor<?> constructor)  {
+    private static <T> T instantiate(Constructor<T> constructor)  {
         try {
             return constructor.newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
@@ -92,6 +94,7 @@ public class MuadContext {
         if (!initialized) {
             throw new ContextNotInitializedException();
         }
+        //noinspection unchecked
         return (T)instances.get(clazz);
     }
 
