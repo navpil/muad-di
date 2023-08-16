@@ -187,6 +187,7 @@ Here are some articles about it:
 - [Peaceful resolution](https://blogs.infosupport.com/injecting-jsr330-into-jsr299/)
 </details>
 
+Optional reading: [JEE confusion, including ApplicationScoped vs Singleton discussion](http://germanescobar.blogspot.com/2010/04/4-areas-of-possible-confusion-in-jee6.html)
 
 ## DI Framework examples
 
